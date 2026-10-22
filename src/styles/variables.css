@@ -1,0 +1,67 @@
+:root {
+  /* Brand accents: lavender = primary, sky = secondary, pink = third */
+  --color-lavender: #A29BFE;
+  --color-lavender-deep: #6C63D9;
+  --color-sky: #74D7F7;
+  --color-pink: #FFB4D9;
+
+  /* Backgrounds + surfaces */
+  --color-bg-light: #FAFAFC;
+  --color-surface-light: #FFFFFF;
+  --color-bg-dark: #111116;
+  --color-surface-dark: #1B1B23;
+
+  /* Text */
+  --color-text-primary-light: #18181F;
+  --color-text-secondary-light: #6F6F7D;
+  --color-text-primary-dark: #F7F7FB;
+  --color-text-secondary-dark: #A6A6B3;
+
+  /* Borders */
+  --color-border-light: #E8E8EF;
+  --color-border-dark: #2C2C36;
+
+  /* Gradients */
+  --gradient-lavender-sky: linear-gradient(135deg, var(--color-lavender), var(--color-sky));
+  --gradient-pink-lavender: linear-gradient(135deg, var(--color-pink), var(--color-lavender));
+
+  /* Typography */
+  --font-family-ar: "Segoe UI", Tahoma, "Noto Sans Arabic", "Geeza Pro", Arial, sans-serif;
+  --font-family-en: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+  --font-size-4xl: 2.5rem;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Spacing */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-96: 96px;
+
+  /* Border radius */
+  --radius-8: 8px;
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-24: 24px;
+  --radius-full: 999px;
+
+  /* Container widths */
+  --container-md: 1200px;
+  --container-lg: 1400px;
+}

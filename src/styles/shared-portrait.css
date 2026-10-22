@@ -1,0 +1,48 @@
+.shared-portrait {
+  position: fixed;
+  z-index: 15;
+  margin: 0;
+  border-radius: var(--radius-24);
+  pointer-events: none;
+  will-change: transform, width, height, box-shadow, filter;
+  transform-origin: center center;
+  transition: box-shadow 0.2s linear;
+}
+
+.shared-portrait__media {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-24);
+}
+
+.shared-portrait__placeholder,
+.shared-portrait__image {
+  width: 100%;
+  height: 100%;
+}
+
+.shared-portrait__placeholder {
+  background: var(--gradient-lavender-sky);
+}
+
+.shared-portrait__image {
+  object-fit: cover;
+}
+
+.shared-portrait__scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shared-portrait {
+    transition: left 0.01ms linear, top 0.01ms linear, width 0.01ms linear, height 0.01ms linear;
+  }
+}

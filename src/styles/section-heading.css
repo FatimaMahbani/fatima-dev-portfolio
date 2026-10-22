@@ -1,0 +1,40 @@
+.heading-fa {
+  will-change: transform, opacity;
+}
+
+.heading-fa__fa {
+  position: relative;
+  display: inline-block;
+}
+
+.heading-fa__underline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.1em;
+  width: 100%;
+  height: 0.26em;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.heading-fa__underline path {
+  fill: none;
+  stroke: var(--color-lavender-deep);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.heading-fa__rest {
+  display: inline-block;
+  color: var(--color-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heading-fa,
+  .heading-fa__fa,
+  .heading-fa__rest {
+    transition: none !important;
+  }
+}

@@ -1,0 +1,187 @@
+.forsa {
+  position: relative;
+  background: var(--color-bg);
+  color: var(--color-text);
+  padding: 140px var(--space-24) var(--space-96);
+  overflow: clip;
+}
+
+.forsa__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-64);
+  width: min(100%, 76rem);
+  margin: 0 auto;
+}
+
+.forsa__content {
+  text-align: start;
+}
+
+.forsa__illustration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, opacity;
+}
+
+.forsa__illustration-lottie {
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 1 / 1;
+}
+
+.forsa__kicker {
+  margin: 0 0 var(--space-24);
+  color: var(--color-lavender-deep);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.04em;
+  will-change: transform, opacity;
+}
+
+.forsa__heading {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 0 0.32em;
+  margin: 0 0 var(--space-16);
+  font-family: var(--font-family-ar);
+  font-size: clamp(2.2rem, 3.6vw, 3.4rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.35;
+}
+
+.forsa__word {
+  display: inline-block;
+  overflow: hidden;
+  line-height: 1.35;
+}
+
+.forsa__word-inner {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.forsa__body {
+  margin: 0 0 var(--space-48);
+  max-width: 30rem;
+  color: var(--color-text-secondary);
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  line-height: 1.8;
+  will-change: transform, opacity;
+}
+
+.forsa__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-16);
+  margin-bottom: var(--space-32);
+  will-change: transform, opacity;
+}
+
+.forsa__email {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-16) var(--space-32);
+  border-radius: var(--radius-full);
+  background: var(--color-text);
+  color: var(--color-bg);
+  text-decoration: none;
+  font-family: var(--font-family-en);
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  font-weight: var(--font-weight-semibold);
+  direction: ltr;
+  transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.forsa__email:hover,
+.forsa__email:focus-visible {
+  background: var(--color-lavender-deep);
+  box-shadow: 0 16px 36px rgba(108, 99, 217, 0.28);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.forsa__email-icon {
+  display: inline-flex;
+}
+
+.forsa__linkedin {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-16) var(--space-24);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  color: var(--color-text);
+  text-decoration: none;
+  font-family: var(--font-family-en);
+  font-size: clamp(0.92rem, 1.2vw, 1rem);
+  font-weight: var(--font-weight-medium);
+  direction: ltr;
+  transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.forsa__linkedin:hover,
+.forsa__linkedin:focus-visible {
+  color: var(--color-lavender-deep);
+  border-color: var(--color-lavender);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.forsa__footer {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  will-change: opacity;
+}
+
+@media (max-width: 1024px) {
+  .forsa__inner {
+    gap: var(--space-40);
+  }
+
+  .forsa__illustration-lottie {
+    max-width: 340px;
+  }
+}
+
+@media (max-width: 768px) {
+  .forsa {
+    padding: 96px var(--space-16) var(--space-64);
+  }
+
+  .forsa__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-40);
+  }
+
+  .forsa__illustration-lottie {
+    max-width: 260px;
+  }
+
+  .forsa__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .forsa__email,
+  .forsa__linkedin {
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .forsa__email,
+  .forsa__linkedin {
+    transition: none;
+  }
+}

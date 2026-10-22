@@ -1,0 +1,206 @@
+.fudul {
+  position: relative;
+  background: var(--color-bg);
+  color: var(--color-text);
+  padding: 140px var(--space-24) var(--space-96);
+  overflow: clip;
+}
+
+.fudul__fa {
+  position: absolute;
+  top: 10%;
+  inset-inline-end: -4%;
+  z-index: 0;
+  color: var(--color-sky);
+  font-family: var(--font-family-ar);
+  font-size: clamp(16rem, 38vw, 26rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  opacity: 0;
+  transform: translateY(24px) rotate(-6deg);
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+}
+
+.fudul__inner {
+  position: relative;
+  z-index: 1;
+  width: min(100%, var(--container-lg));
+  margin: 0 auto;
+}
+
+.fudul__header {
+  max-width: 40rem;
+  margin: 0 0 var(--space-64);
+  text-align: start;
+  will-change: transform, opacity;
+}
+
+.fudul__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  margin: 0 0 var(--space-16);
+  color: var(--color-lavender-deep);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.02em;
+}
+
+.fudul__kicker::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-lavender);
+  flex-shrink: 0;
+}
+
+.fudul__title {
+  margin: 0 0 var(--space-16);
+  font-family: var(--font-family-ar);
+  font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+}
+
+.fudul__subtitle {
+  margin: 0;
+  max-width: 30rem;
+  color: var(--color-text-secondary);
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  line-height: 1.75;
+}
+
+.fudul__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(125px, 140px));
+  justify-content: center;
+  gap: var(--space-8);
+}
+
+.fudul__card-wrap {
+  min-width: 0;
+  height: 95px;
+  will-change: opacity, transform;
+}
+
+.fudul__card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: var(--space-8) var(--space-4);
+  border-radius: var(--radius-12);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 6px 14px rgba(108, 99, 217, 0.05);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease,
+    border-color 0.25s ease;
+  will-change: transform;
+}
+
+.fudul__card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(162, 155, 254, 0.3),
+    transparent 60%
+  );
+  opacity: var(--glow-opacity, 0);
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.fudul__card:hover {
+  border-color: rgba(162, 155, 254, 0.45);
+  box-shadow: 0 20px 44px rgba(108, 99, 217, 0.18);
+}
+
+.fudul__card-logo {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: clamp(28px, 4vw, 32px);
+  height: clamp(28px, 4vw, 32px);
+  color: var(--color-text);
+  transition: color 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fudul__card:hover .fudul__card-logo {
+  color: var(--color-lavender-deep);
+  transform: scale(1.14) rotate(-6deg);
+}
+
+.fudul__card-logo svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.fudul__card-name {
+  position: relative;
+  z-index: 1;
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-en);
+  font-size: clamp(0.75rem, 1vw, 0.8125rem);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+  line-height: 1.3;
+}
+
+@media (max-width: 980px) {
+  .fudul__cards {
+    grid-template-columns: repeat(auto-fit, minmax(112px, 130px));
+  }
+
+  .fudul__card-wrap {
+    height: 90px;
+  }
+}
+
+@media (max-width: 640px) {
+  .fudul {
+    padding: 96px var(--space-16) var(--space-64);
+  }
+
+  .fudul__header {
+    margin-bottom: var(--space-48);
+  }
+
+  .fudul__cards {
+    grid-template-columns: repeat(auto-fit, minmax(92px, 115px));
+    gap: var(--space-8);
+  }
+
+  .fudul__card-wrap {
+    height: 85px;
+  }
+}
+
+@media (hover: none) {
+  .fudul__card {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fudul__fa,
+  .fudul__header,
+  .fudul__card-wrap,
+  .fudul__card,
+  .fudul__card-logo {
+    transition: none !important;
+    animation: none !important;
+  }
+}

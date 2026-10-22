@@ -1,0 +1,108 @@
+.site-footer {
+  position: relative;
+  background: #f0edff;
+  border-top: 1px solid var(--color-border);
+  padding: 18px var(--space-24);
+}
+
+html[data-theme="dark"] .site-footer {
+  background: #201b36;
+  border-top-color: #322a54;
+}
+
+.site-footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-24);
+  width: min(100%, 76rem);
+  margin: 0 auto;
+}
+
+.site-footer__info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-8);
+  min-width: 0;
+}
+
+.site-footer__sep {
+  flex-shrink: 0;
+  width: 1px;
+  height: 0.9em;
+  align-self: center;
+  background: rgba(162, 155, 254, 0.5);
+}
+
+.site-footer__copyright,
+.site-footer__role,
+.site-footer__subtitle {
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+.site-footer__copyright {
+  font-weight: var(--font-weight-medium);
+}
+
+.site-footer__role {
+  font-family: var(--font-family-en);
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.site-footer__subtitle {
+  color: var(--color-text-secondary);
+}
+
+.site-footer__top {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background: var(--color-surface);
+  color: var(--color-lavender-deep);
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.site-footer__top:hover,
+.site-footer__top:focus-visible {
+  background: var(--color-lavender);
+  border-color: var(--color-lavender);
+  color: #ffffff;
+  transform: translateY(-3px);
+  outline: none;
+}
+
+@media (max-width: 640px) {
+  .site-footer {
+    padding: var(--space-16);
+  }
+
+  .site-footer__inner {
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .site-footer__info {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer__top {
+    transition: none;
+  }
+}
