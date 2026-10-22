@@ -135,14 +135,20 @@ function Fael({ copy }) {
     startVH: 0.92,
     endVH: 0.6,
   })
-  const [modalProject, setModalProject] = useState(null)
+  const [modalProjectId, setModalProjectId] = useState(null)
   // Stable reference: Fael re-renders every scroll frame, so an inline
   // arrow here would tear down ProjectModal's effect (body-scroll lock,
   // keydown listener) on every tick instead of only on open/close.
-  const closeModal = useCallback(() => setModalProject(null), [])
+  const closeModal = useCallback(() => setModalProjectId(null), [])
 
   const projects = copy.projects
   const total = projects.length
+  // Looked up by id (not stored as an object reference) so the modal keeps
+  // showing the current locale's copy if the language changes while it's open.
+  const modalProject = modalProjectId
+    ? projects.find((item) => item.id === modalProjectId) ?? null
+    : null
+  const openModal = useCallback((item) => setModalProjectId(item.id), [])
 
   // Showcase timeline: a generous ~127vh slot per project (see fael.css's
   // track height), each slot holding its project fully still for the
@@ -227,7 +233,7 @@ function Fael({ copy }) {
                   role="exit"
                   ctaLabel={copy.ctaLabel}
                   visitLabel={copy.modal.visitLabel}
-                  onExplore={setModalProject}
+                  onExplore={openModal}
                 />
                 {nextProject ? (
                   <ProjectCopy
@@ -237,7 +243,7 @@ function Fael({ copy }) {
                     role="enter"
                     ctaLabel={copy.ctaLabel}
                     visitLabel={copy.modal.visitLabel}
-                    onExplore={setModalProject}
+                    onExplore={openModal}
                   />
                 ) : null}
               </div>
@@ -301,7 +307,7 @@ function Fael({ copy }) {
                   <button
                     type="button"
                     className="fael__cta"
-                    onClick={() => setModalProject(item)}
+                    onClick={() => openModal(item)}
                   >
                     {copy.ctaLabel}
                   </button>
