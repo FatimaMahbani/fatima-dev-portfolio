@@ -47,7 +47,7 @@ html[data-locale="en"] .about__layout {
 
 .about__title {
   margin: 0 0 var(--space-24);
-  font-family: var(--font-family-ar);
+  font-family: var(--font-family);
   font-size: clamp(3.2rem, 6.5vw, 5.5rem);
   font-weight: var(--font-weight-bold);
   line-height: 1.2;
@@ -71,6 +71,56 @@ html[data-locale="en"] .about__layout {
   font-size: clamp(0.95rem, 1.1vw, 1.0625rem);
   font-weight: var(--font-weight-regular);
   line-height: 1.85;
+}
+
+.about__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-16);
+  margin-top: var(--space-32);
+}
+
+.about__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: 12px 26px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  font-family: var(--font-family);
+  font-size: 0.92rem;
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+    transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.about__cta--primary {
+  background: var(--color-lavender);
+  color: #ffffff;
+}
+
+.about__cta--primary:hover,
+.about__cta--primary:focus-visible {
+  background: var(--color-lavender-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(108, 99, 217, 0.28);
+  outline: none;
+}
+
+.about__cta--secondary {
+  border-color: var(--color-lavender);
+  background: transparent;
+  color: var(--color-lavender-deep);
+}
+
+.about__cta--secondary:hover,
+.about__cta--secondary:focus-visible {
+  background: rgba(162, 155, 254, 0.1);
+  transform: translateY(-2px);
+  outline: none;
 }
 
 .about__portrait {
@@ -140,5 +190,22 @@ html[data-locale="en"] .about__layout {
     width: min(62vw, 260px);
     height: auto;
     aspect-ratio: 3 / 4;
+  }
+
+  .about__actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .about__cta {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about__cta--primary,
+  .about__cta--secondary {
+    transition: none;
   }
 }

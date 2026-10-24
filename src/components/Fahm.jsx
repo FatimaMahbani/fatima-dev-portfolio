@@ -189,7 +189,12 @@ function BlockContent({ block, sceneIndex, copy }) {
   return null
 }
 
-function Fahm({ copy }) {
+function Fahm({ copy, locale }) {
+  // In English the stage title already IS the gloss ("Discover", "Build"…),
+  // so showing both would just repeat the same word — the small label is
+  // only meaningful in Arabic, where it glosses the Arabic word in English.
+  const showGloss = locale !== "en"
+
   const sectionRef = useRef(null)
   const mobileRef = useRef(null)
   const { progress, reduceMotion } = useTrackProgress(sectionRef)
@@ -329,7 +334,9 @@ function Fahm({ copy }) {
               <span className="fahm__caption-num">{captionScene.number}</span>
               <h3 className="fahm__caption-title">
                 {captionScene.title}
-                <span className="fahm__caption-gloss">{captionScene.gloss}</span>
+                {showGloss ? (
+                  <span className="fahm__caption-gloss">{captionScene.gloss}</span>
+                ) : null}
               </h3>
               <p className="fahm__caption-micro">{captionScene.micro}</p>
             </div>
@@ -415,7 +422,9 @@ function Fahm({ copy }) {
                 <span className="fahm__moment-num">{scene.number}</span>
                 <p className="fahm__moment-phrase">
                   {scene.title}
-                  <span className="fahm__caption-gloss">{scene.gloss}</span>
+                  {showGloss ? (
+                    <span className="fahm__caption-gloss">{scene.gloss}</span>
+                  ) : null}
                 </p>
                 <p className="fahm__moment-micro">{scene.micro}</p>
               </div>

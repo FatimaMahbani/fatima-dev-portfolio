@@ -12,7 +12,7 @@
   inset-inline-end: -4%;
   z-index: 0;
   color: var(--color-sky);
-  font-family: var(--font-family-ar);
+  font-family: var(--font-family);
   font-size: clamp(16rem, 38vw, 26rem);
   font-weight: var(--font-weight-bold);
   line-height: 1;
@@ -59,7 +59,7 @@
 
 .fudul__title {
   margin: 0 0 var(--space-16);
-  font-family: var(--font-family-ar);
+  font-family: var(--font-family);
   font-size: clamp(2.8rem, 5.5vw, 4.5rem);
   font-weight: var(--font-weight-bold);
   line-height: 1.2;

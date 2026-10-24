@@ -21,7 +21,7 @@
   place-items: center;
   line-height: 1;
   color: #ffffff;
-  font-family: var(--font-family-ar);
+  font-family: var(--font-family);
   font-weight: 500;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }

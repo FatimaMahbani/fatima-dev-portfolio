@@ -145,7 +145,7 @@ function ExternalLinkIcon() {
   )
 }
 
-function ProjectModal({ project, total, copy, onClose }) {
+function ProjectModal({ project, total, copy, placeholderMark, onClose }) {
   const dialogRef = useRef(null)
   const closeRef = useRef(null)
   const [activeIndex, setActiveIndex] = useState(0)
@@ -276,7 +276,7 @@ function ProjectModal({ project, total, copy, onClose }) {
                     onOpenLightbox={() => setLightboxOpen(true)}
                   />
                 ) : (
-                  <ProjectScreen project={project} />
+                  <ProjectScreen project={project} mark={placeholderMark} />
                 )}
               </ComputerMockup>
             </div>

@@ -55,6 +55,10 @@
   min-width: 0;
 }
 
+/* `--left`/`--right` are always PHYSICAL positions (the grid never
+   reorders), so these rules are locale-independent. Which content —
+   the word paired with the supporting copy, or the lone word — renders
+   in which column is decided once in Hero.jsx, not here. */
 .hero__col--left {
   display: flex;
   justify-content: flex-end;
@@ -70,12 +74,12 @@
 }
 
 .hero__word-block {
-  position: relative;
+  min-width: 0;
 }
 
 .hero__word {
   margin: 0;
-  font-family: var(--font-family-ar);
+  font-family: var(--font-family);
   font-size: clamp(5.5rem, 8.2vw, 8.25rem);
   font-weight: var(--font-weight-bold);
   line-height: 1.15;
@@ -88,11 +92,13 @@
   padding-block: 0.08em;
 }
 
-.hero__word--left {
+/* Entrance stagger follows physical position (left word settles in just
+   before the right one), independent of which word/locale is showing. */
+.hero__col--left .hero__word {
   animation: hero-word-in 0.8s 0.12s ease both;
 }
 
-.hero__word--right {
+.hero__col--right .hero__word {
   animation: hero-word-in 0.8s 0.22s ease both;
 }
 
@@ -141,14 +147,32 @@
 .hero__intro {
   position: absolute;
   top: calc(100% + var(--space-32));
-  left: auto;
-  /* Right edge near portrait; width grows only leftward */
-  right: clamp(32px, 3vw, 48px);
-  width: clamp(420px, 30vw, 480px);
-  min-width: 420px;
   max-width: 480px;
   box-sizing: border-box;
   animation: hero-copy-in 0.75s 0.4s ease both;
+}
+
+/* Positioned relative to `.hero__col` (the nearest `position: relative`
+   ancestor now that `.hero__word-block` no longer claims it), with BOTH
+   edges set so the browser computes the width from the column's actual
+   available space instead of a fixed clamp() that doesn't know how wide
+   the column really is — that mismatch is what let the copy overflow the
+   viewport on narrower columns. Anchored from whichever edge faces the
+   portrait, so the copy still grows away from it, toward open space.
+   `.hero__stage` pins `direction: ltr` unconditionally (see above), so
+   `text-align: start` would always resolve to left — text-align is set
+   explicitly here instead, keyed off the same column that already
+   decides which locale's paired word+copy lives there. */
+.hero__col--left .hero__intro {
+  right: clamp(32px, 3vw, 48px);
+  left: var(--space-16);
+  text-align: right;
+}
+
+.hero__col--right .hero__intro {
+  left: clamp(32px, 3vw, 48px);
+  right: var(--space-16);
+  text-align: left;
 }
 
 .hero__lead {
@@ -218,11 +242,17 @@
 
   .hero__intro {
     top: calc(100% + var(--space-24));
-    left: auto;
-    right: 0;
-    width: clamp(400px, 32vw, 460px);
-    min-width: 400px;
     max-width: 460px;
+  }
+
+  .hero__col--left .hero__intro {
+    right: 0;
+    left: var(--space-16);
+  }
+
+  .hero__col--right .hero__intro {
+    left: 0;
+    right: var(--space-16);
   }
 }
 
@@ -252,11 +282,17 @@
 
   .hero__intro {
     top: calc(100% + var(--space-28));
-    left: auto;
-    right: clamp(28px, 2.8vw, 40px);
-    width: clamp(320px, 34vw, 420px);
-    min-width: 300px;
     max-width: 420px;
+  }
+
+  .hero__col--left .hero__intro {
+    right: clamp(28px, 2.8vw, 40px);
+    left: var(--space-16);
+  }
+
+  .hero__col--right .hero__intro {
+    left: clamp(28px, 2.8vw, 40px);
+    right: var(--space-16);
   }
 }
 
@@ -286,13 +322,16 @@
     aspect-ratio: 3 / 4;
   }
 
-  .hero__word--right {
+  /* Stacking order is content-based (lone word, then the paired word and
+     its copy), the same in both locales — only the horizontal mirroring
+     is locale-specific, and that doesn't apply to a vertical stack. */
+  .hero__word-block--lone .hero__word {
     order: 2;
     font-size: clamp(2.8rem, 14vw, 4rem);
     line-height: 0.9;
   }
 
-  .hero__word--left {
+  .hero__word-block--paired .hero__word {
     order: 3;
     font-size: clamp(2.8rem, 14vw, 4rem);
     line-height: 0.9;
@@ -303,14 +342,11 @@
     order: 4;
     width: min(100%, 28rem);
     margin-top: var(--space-24);
-    text-align: start;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero__word,
-  .hero__word--left,
-  .hero__word--right,
   .hero__intro {
     animation: none;
     transition: none;

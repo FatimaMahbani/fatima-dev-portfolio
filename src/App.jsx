@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 import Navbar from "./components/Navbar.jsx"
 import ThemeSwitch from "./components/ThemeSwitch.jsx"
 import Hero from "./components/Hero.jsx"
@@ -25,6 +25,16 @@ function App() {
   const [theme, setTheme] = useState(DEFAULT_THEME)
   const [locale, setLocale] = useState(() => getStoredLocale())
   const copy = content[locale] ?? content[DEFAULT_LOCALE]
+  // Switching languages can change how tall other sections' text wraps,
+  // shifting everything below it — this restores the exact scroll offset
+  // right after the new copy commits, so the visible section never jumps.
+  const scrollRestoreRef = useRef(null)
+  useLayoutEffect(() => {
+    if (scrollRestoreRef.current !== null) {
+      window.scrollTo(0, scrollRestoreRef.current)
+      scrollRestoreRef.current = null
+    }
+  }, [locale])
   const heroSlotRef = useRef(null)
   const aboutSlotRef = useRef(null)
   const { portraitStyle, crossfade, badgeStyle, navCompact } = useHeroAboutScroll(
@@ -41,6 +51,7 @@ function App() {
 
   function handleLanguageChange(next) {
     if (next === locale) return
+    scrollRestoreRef.current = window.scrollY
     applyLocale(next)
     storeLocale(next)
     setLocale(next)
@@ -55,7 +66,12 @@ function App() {
         locale={locale}
         onLanguageChange={handleLanguageChange}
       />
-      <ThemeSwitch theme={theme} onToggle={handleThemeToggle} />
+      <ThemeSwitch
+        theme={theme}
+        onToggle={handleThemeToggle}
+        toDarkLabel={copy.nav.themeToDark}
+        toLightLabel={copy.nav.themeToLight}
+      />
       <SharedPortrait
         style={portraitStyle}
         alt={copy.hero.name}
@@ -65,11 +81,12 @@ function App() {
       />
       <Hero
         copy={copy.hero}
+        locale={locale}
         portraitSlotRef={heroSlotRef}
         badgeStyle={badgeStyle}
       />
       <About copy={copy.about} slotRef={aboutSlotRef} />
-      <Fahm copy={copy.fahm} />
+      <Fahm copy={copy.fahm} locale={locale} />
       <Fael copy={copy.fael} />
       <Fudul copy={copy.fudul} />
       <Forsa copy={copy.forsa} />

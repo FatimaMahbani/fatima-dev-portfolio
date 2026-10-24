@@ -1,7 +1,7 @@
 // What renders inside a ComputerMockup's screen for one project. Projects
 // without a `previewImage` yet fall back to an honest, labeled placeholder
 // (brand gradient + initials + name) rather than an invented screenshot.
-function ProjectScreen({ project, style, className = "" }) {
+function ProjectScreen({ project, mark, style, className = "" }) {
   if (project.previewImage) {
     return (
       <div
@@ -31,7 +31,7 @@ function ProjectScreen({ project, style, className = "" }) {
       </div>
       <div className="project-screen__body">
         <span className="project-screen__mark" aria-hidden="true">
-          ف
+          {mark}
         </span>
         <span className="project-screen__initials">{project.initials}</span>
         <span className="project-screen__name">{project.name}</span>

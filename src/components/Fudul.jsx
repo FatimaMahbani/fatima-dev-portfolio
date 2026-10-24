@@ -84,7 +84,7 @@ function Fudul({ copy }) {
           transform: `translateY(${(1 - faP) * 40}px) rotate(${-6 + faP * -3}deg) scale(${0.92 + faP * 0.08})`,
         }}
       >
-        ف
+        {copy.decorativeMark}
       </span>
 
       <div className="fudul__inner">

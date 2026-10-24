@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { useEntranceProgress, clamp } from "../hooks/useScrollMotion.js"
 import LottiePlayer from "./LottiePlayer.jsx"
 
@@ -6,18 +6,11 @@ function loadDeveloperIllustration() {
   return import("../assets/lottie/web-developer-illustration.json").then((mod) => mod.default)
 }
 
-function MailIcon() {
+function SendIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
       <path
-        d="M4 6.5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path
-        d="m4 7.5 8 6 8-6"
+        d="M17.5 2.5 9 11M17.5 2.5 12 17.5l-3-6.5-6.5-3 15-5.5Z"
         fill="none"
         stroke="currentColor"
         strokeWidth="1.5"
@@ -28,12 +21,34 @@ function MailIcon() {
   )
 }
 
-function LinkedInIcon() {
+function SpinnerIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+    <svg className="forsa__spinner" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
+      <circle
+        cx="10"
+        cy="10"
+        r="7.5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeDasharray="28 18"
+      />
+    </svg>
+  )
+}
+
+function CheckCircleIcon() {
+  return (
+    <svg viewBox="0 0 20 20" width="22" height="22" aria-hidden="true">
+      <circle cx="10" cy="10" r="8.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
       <path
-        fill="currentColor"
-        d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 7a1.96 1.96 0 1 0 0-3.92A1.96 1.96 0 0 0 5.25 7ZM20.44 20h-3.37v-5.6c0-1.34-.03-3.06-1.86-3.06-1.87 0-2.16 1.46-2.16 2.96V20H9.68V8.5h3.24v1.57h.05c.45-.86 1.56-1.77 3.21-1.77 3.43 0 4.26 2.26 4.26 5.19V20Z"
+        d="m6.2 10.2 2.5 2.5 5-5.4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   )
@@ -56,6 +71,232 @@ function Word({ text, p }) {
         {text}
       </span>
     </span>
+  )
+}
+
+const EMPTY_FORM = { name: "", email: "", subject: "", message: "" }
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+function encodeFormData(data) {
+  return Object.keys(data)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+    .join("&")
+}
+
+function ContactForm({ copy }) {
+  const [values, setValues] = useState(EMPTY_FORM)
+  const [honeypot, setHoneypot] = useState("")
+  const [errors, setErrors] = useState({})
+  const [status, setStatus] = useState("idle") // idle | submitting | success | error
+
+  function handleChange(event) {
+    const { name, value } = event.target
+    setValues((prev) => ({ ...prev, [name]: value }))
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: null }))
+    }
+  }
+
+  function validate() {
+    const nextErrors = {}
+    for (const field of ["name", "email", "subject", "message"]) {
+      if (!values[field].trim()) {
+        nextErrors[field] = copy.requiredError
+      }
+    }
+    if (!nextErrors.email && !EMAIL_PATTERN.test(values.email.trim())) {
+      nextErrors.email = copy.emailInvalidError
+    }
+    return nextErrors
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault()
+    if (status === "submitting") return // prevent duplicate submissions
+
+    const nextErrors = validate()
+    setErrors(nextErrors)
+    if (Object.keys(nextErrors).length > 0) return
+
+    setStatus("submitting")
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encodeFormData({ "form-name": "contact", ...values, "bot-field": honeypot }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Submission failed")
+        setStatus("success")
+      })
+      .catch(() => setStatus("error"))
+  }
+
+  function handleReset() {
+    setValues(EMPTY_FORM)
+    setHoneypot("")
+    setErrors({})
+    setStatus("idle")
+  }
+
+  if (status === "success") {
+    return (
+      <div className="forsa__result" role="status">
+        <span className="forsa__result-icon" aria-hidden="true">
+          <CheckCircleIcon />
+        </span>
+        <p className="forsa__result-title">{copy.successTitle}</p>
+        <p className="forsa__result-message">{copy.successMessage}</p>
+        <button type="button" className="forsa__reset" onClick={handleReset}>
+          {copy.sendAnotherLabel}
+        </button>
+      </div>
+    )
+  }
+
+  return (
+    <form
+      className="forsa__form"
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      onSubmit={handleSubmit}
+      noValidate
+    >
+      <input type="hidden" name="form-name" value="contact" />
+
+      {/* Honeypot — invisible to people, a giveaway for bots. */}
+      <p className="forsa__honeypot" aria-hidden="true">
+        <label>
+          Leave this field empty
+          <input
+            type="text"
+            name="bot-field"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(event) => setHoneypot(event.target.value)}
+          />
+        </label>
+      </p>
+
+      <div className="forsa__field-row">
+        <div className="forsa__field">
+          <label className="forsa__label" htmlFor="forsa-name">
+            {copy.nameLabel}
+          </label>
+          <input
+            id="forsa-name"
+            name="name"
+            type="text"
+            className={`forsa__input${errors.name ? " has-error" : ""}`}
+            placeholder={copy.namePlaceholder}
+            value={values.name}
+            onChange={handleChange}
+            aria-invalid={Boolean(errors.name)}
+            aria-describedby={errors.name ? "forsa-name-error" : undefined}
+          />
+          {errors.name ? (
+            <span className="forsa__error" id="forsa-name-error">
+              {errors.name}
+            </span>
+          ) : null}
+        </div>
+
+        <div className="forsa__field">
+          <label className="forsa__label" htmlFor="forsa-email">
+            {copy.emailLabel}
+          </label>
+          <input
+            id="forsa-email"
+            name="email"
+            type="email"
+            className={`forsa__input${errors.email ? " has-error" : ""}`}
+            placeholder={copy.emailPlaceholder}
+            value={values.email}
+            onChange={handleChange}
+            aria-invalid={Boolean(errors.email)}
+            aria-describedby={errors.email ? "forsa-email-error" : undefined}
+          />
+          {errors.email ? (
+            <span className="forsa__error" id="forsa-email-error">
+              {errors.email}
+            </span>
+          ) : null}
+        </div>
+      </div>
+
+      <div className="forsa__field">
+        <label className="forsa__label" htmlFor="forsa-subject">
+          {copy.subjectLabel}
+        </label>
+        <select
+          id="forsa-subject"
+          name="subject"
+          className={`forsa__input forsa__select${values.subject ? "" : " is-placeholder"}${errors.subject ? " has-error" : ""}`}
+          value={values.subject}
+          onChange={handleChange}
+          aria-invalid={Boolean(errors.subject)}
+          aria-describedby={errors.subject ? "forsa-subject-error" : undefined}
+        >
+          <option value="" disabled>
+            {copy.subjectPlaceholder}
+          </option>
+          {copy.subjectOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        {errors.subject ? (
+          <span className="forsa__error" id="forsa-subject-error">
+            {errors.subject}
+          </span>
+        ) : null}
+      </div>
+
+      <div className="forsa__field">
+        <label className="forsa__label" htmlFor="forsa-message">
+          {copy.messageLabel}
+        </label>
+        <textarea
+          id="forsa-message"
+          name="message"
+          rows={4}
+          className={`forsa__input forsa__input--textarea${errors.message ? " has-error" : ""}`}
+          placeholder={copy.messagePlaceholder}
+          value={values.message}
+          onChange={handleChange}
+          aria-invalid={Boolean(errors.message)}
+          aria-describedby={errors.message ? "forsa-message-error" : undefined}
+        />
+        {errors.message ? (
+          <span className="forsa__error" id="forsa-message-error">
+            {errors.message}
+          </span>
+        ) : null}
+      </div>
+
+      {status === "error" ? <p className="forsa__submit-error">{copy.errorMessage}</p> : null}
+
+      <button
+        type="submit"
+        className="forsa__submit"
+        disabled={status === "submitting"}
+      >
+        {status === "submitting" ? (
+          <>
+            <SpinnerIcon />
+            {copy.submittingLabel}
+          </>
+        ) : (
+          <>
+            <SendIcon />
+            {copy.submitLabel}
+          </>
+        )}
+      </button>
+    </form>
   )
 }
 
@@ -106,22 +347,7 @@ function Forsa({ copy }) {
             className="forsa__actions"
             style={{ opacity: actionsP, transform: `translateY(${(1 - actionsP) * 16}px)` }}
           >
-            <a className="forsa__email" href={`mailto:${copy.email}`}>
-              <span className="forsa__email-icon" aria-hidden="true">
-                <MailIcon />
-              </span>
-              <span className="forsa__email-text">{copy.email}</span>
-            </a>
-
-            <a
-              className="forsa__linkedin"
-              href={copy.linkedinUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <LinkedInIcon />
-              <span>{copy.linkedinLabel}</span>
-            </a>
+            <ContactForm copy={copy.form} />
           </div>
 
           <p className="forsa__footer" style={{ opacity: footerP }}>

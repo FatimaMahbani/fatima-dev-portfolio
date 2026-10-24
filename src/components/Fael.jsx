@@ -110,7 +110,7 @@ function ProjectCopy({ project, total, wipe, role, ctaLabel, visitLabel, onExplo
   )
 }
 
-function ScreenLayer({ project, wipe, role }) {
+function ScreenLayer({ project, mark, wipe, role }) {
   const entering = role === "enter"
   // Masked push-slide: the two screens never occupy the same pixels at
   // once (unlike a plain crossfade), so there's no double-exposure on
@@ -121,6 +121,7 @@ function ScreenLayer({ project, wipe, role }) {
   return (
     <ProjectScreen
       project={project}
+      mark={mark}
       className="project-screen--layer"
       style={{ transform: `translateX(${x}%)`, zIndex: entering ? 2 : 1 }}
     />
@@ -250,9 +251,19 @@ function Fael({ copy }) {
 
               <div className="fael__visual">
                 <ComputerMockup>
-                  <ScreenLayer project={project} wipe={wipe} role="exit" />
+                  <ScreenLayer
+                    project={project}
+                    mark={copy.placeholderMark}
+                    wipe={wipe}
+                    role="exit"
+                  />
                   {nextProject ? (
-                    <ScreenLayer project={nextProject} wipe={wipe} role="enter" />
+                    <ScreenLayer
+                      project={nextProject}
+                      mark={copy.placeholderMark}
+                      wipe={wipe}
+                      role="enter"
+                    />
                   ) : null}
                 </ComputerMockup>
               </div>
@@ -287,7 +298,7 @@ function Fael({ copy }) {
           {projects.map((item) => (
             <li key={item.id} className="fael__mobile-item">
               <ComputerMockup className="computer--mobile">
-                <ProjectScreen project={item} />
+                <ProjectScreen project={item} mark={copy.placeholderMark} />
               </ComputerMockup>
               <div className="fael__mobile-copy">
                 <p className="fael__index">
@@ -340,6 +351,7 @@ function Fael({ copy }) {
         project={modalProject}
         total={total}
         copy={copy.modal}
+        placeholderMark={copy.placeholderMark}
         onClose={closeModal}
       />
     </section>

@@ -22,7 +22,7 @@ function WaveHandIcon() {
   )
 }
 
-function GreetingBadge() {
+function GreetingBadge({ text }) {
   const [mode, setMode] = useState("hi")
   const [phase, setPhase] = useState("enter")
   const [reduceMotion, setReduceMotion] = useState(false)
@@ -94,7 +94,7 @@ function GreetingBadge() {
   return (
     <div className="greeting-badge" aria-hidden="true">
       <span className={contentClass}>
-        {mode === "hi" ? "أهلًا" : <WaveHandIcon />}
+        {mode === "hi" ? text : <WaveHandIcon />}
       </span>
     </div>
   )

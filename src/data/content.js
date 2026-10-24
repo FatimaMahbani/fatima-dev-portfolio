@@ -1,8 +1,3 @@
-export const visualWords = {
-  left: "تُبنى",
-  right: "فِكرة",
-}
-
 export const content = {
   ar: {
     nav: {
@@ -26,9 +21,11 @@ export const content = {
     },
     hero: {
       name: "فاطمة عبدالله",
-      lead: "أحوّل الأفكار إلى تجارب رقمية.",
+      greeting: "أهلًا",
+      words: { left: "تُبنى", right: "فِكرة" },
+      lead: "أحوّل الأفكار إلى تجارب رقمية",
       secondary:
-        "مطوّرة ويب أصنع واجهات وتجارب رقمية تجمع بين البساطة، التفاصيل، والشخصية.",
+        "مطوّرة ويب أصنع واجهات وتجارب رقمية تجمع بين البساطة، التفاصيل، والشخصية",
       ctaPrimary: "مشاريعي",
       ctaSecondary: "تواصل معي",
     },
@@ -37,6 +34,9 @@ export const content = {
       label: "عني وأفكاري",
       heading: "وراء كل فكرة حكاية، وهذه حكايتي.",
       body: "أنا فاطمة، مطوّرة ويب أحب تحويل الأفكار إلى تجارب رقمية بسيطة ومدروسة، تجمع بين التقنية والإبداع والاهتمام بالتفاصيل.",
+      ctaProjects: "عرض مشاريعي",
+      ctaContact: "تواصل معي",
+      ctaDownload: "تحميل CV",
     },
     fahm: {
       kicker: "مختبر التفكير",
@@ -87,8 +87,9 @@ export const content = {
       title: "فاءُ فعل",
       subtitle: "مشاريع تحوّلت من فكرة إلى شيء يعمل.",
       navAria: "تصفح المشاريع",
+      placeholderMark: "ف",
       outro: {
-        headline: "المشاريع تُنجز… والأفكار تستمر.",
+        headline: "المشاريع تُنجز… والأفكار تستمر",
         highlight: "الأفكار تستمر",
         caption: "وما زال هناك الكثير لنصنعه.",
       },
@@ -361,6 +362,7 @@ export const content = {
       title: "فاءُ فضول",
       subtitle: "فضول لا يهدأ تجاه كل ما يُبنى بالكود.",
       kicker: "أدوات ومجالات",
+      decorativeMark: "ف",
       categories: [
         {
           id: "languages",
@@ -421,13 +423,37 @@ export const content = {
     forsa: {
       title: "فاءُ فرصة",
       kicker: "فاءُ فرصة",
-      heading: "كل فكرة عظيمة تبدأ بفرصة.",
+      heading: "كل فكرة عظيمة تبدأ بفرصة",
       body: "إن كانت لديك فكرة تبحث عن من يبنيها، يسعدني أن أسمع عنها.",
       emailLabel: "راسليني عبر البريد",
       email: "fatima9dev@hotmail.com",
       linkedinLabel: "LinkedIn",
       linkedinUrl: "https://www.linkedin.com/in/fatimabdullah/",
       footerNote: "فاطمة عبدالله",
+      form: {
+        nameLabel: "الاسم الكامل",
+        namePlaceholder: "اكتب اسمك الكامل",
+        emailLabel: "البريد الإلكتروني",
+        emailPlaceholder: "example@email.com",
+        subjectLabel: "الموضوع",
+        subjectPlaceholder: "اختر موضوع الرسالة",
+        subjectOptions: [
+          { value: "new-project", label: "مشروع جديد" },
+          { value: "job-opportunity", label: "فرصة عمل" },
+          { value: "collaboration", label: "تعاون" },
+          { value: "general-inquiry", label: "استفسار عام" },
+        ],
+        messageLabel: "الرسالة",
+        messagePlaceholder: "اكتب رسالتك هنا...",
+        submitLabel: "إرسال الرسالة",
+        submittingLabel: "جارٍ الإرسال...",
+        successTitle: "تم الإرسال بنجاح!",
+        successMessage: "شكرًا لتواصلك، سأرد عليك في أقرب وقت ممكن.",
+        sendAnotherLabel: "إرسال رسالة أخرى",
+        errorMessage: "حدث خطأ أثناء الإرسال، حاول مرة أخرى.",
+        requiredError: "هذا الحقل مطلوب.",
+        emailInvalidError: "يرجى إدخال بريد إلكتروني صحيح.",
+      },
     },
     footer: {
       copyright: "© 2026 فاطمة عبدالله",
@@ -442,11 +468,11 @@ export const content = {
       brandAria: "Fatima",
       links: [
         { href: "#home", label: "Home" },
-        { href: "#about", label: "فكرة" },
-        { href: "#fahm", label: "فهم" },
-        { href: "#projects", label: "فعل" },
-        { href: "#skills", label: "فضول" },
-        { href: "#contact", label: "فرصة" },
+        { href: "#about", label: "Idea" },
+        { href: "#fahm", label: "Understanding" },
+        { href: "#projects", label: "Work" },
+        { href: "#skills", label: "Curiosity" },
+        { href: "#contact", label: "Opportunity" },
       ],
       languageLabel: "AR",
       languageAria: "Switch to Arabic",
@@ -458,6 +484,8 @@ export const content = {
     },
     hero: {
       name: "Fatima Abdullah",
+      greeting: "Hi",
+      words: { left: "Built", right: "Idea" },
       lead: "I turn ideas into digital experiences.",
       secondary:
         "Web developer crafting thoughtful, expressive, and user-focused digital experiences.",
@@ -465,41 +493,44 @@ export const content = {
       ctaSecondary: "Contact Me",
     },
     about: {
-      title: "فاءُ فكرة",
+      title: "Fa Idea",
       label: "About & Ideas",
       heading: "Behind every idea is a story — this is mine.",
       body: "I'm Fatima, a web developer who loves turning ideas into simple, thoughtful digital experiences that blend technique, creativity, and attention to detail.",
+      ctaProjects: "View My Projects",
+      ctaContact: "Contact Me",
+      ctaDownload: "Download CV",
     },
     fahm: {
       kicker: "Thinking Lab",
-      title: "فاءُ فهم",
+      title: "Fa Understanding",
       subtitle: "From a complex idea to a clear system.",
       scenes: [
         {
           id: "discover",
           number: "01",
-          title: "أستكشف",
+          title: "Discover",
           gloss: "Discover",
           micro: "Gathering scattered ideas and requirements.",
         },
         {
           id: "connect",
           number: "02",
-          title: "أربط",
+          title: "Connect",
           gloss: "Connect",
           micro: "Connecting the pieces into a clear system.",
         },
         {
           id: "build",
           number: "03",
-          title: "أبني",
+          title: "Build",
           gloss: "Build",
           micro: "Turning the structure into working code.",
         },
         {
           id: "launch",
           number: "04",
-          title: "أطلق",
+          title: "Launch",
           gloss: "Launch",
           micro: "Shipping a ready digital product.",
         },
@@ -516,9 +547,10 @@ export const content = {
       finalLine: "From a complex idea to a working solution.",
     },
     fael: {
-      title: "فاءُ فعل",
+      title: "Fa Work",
       subtitle: "Projects that moved from idea to something that works.",
       navAria: "Browse projects",
+      placeholderMark: "F",
       outro: {
         headline: "Projects get finished… and ideas keep going.",
         highlight: "ideas keep going",
@@ -790,9 +822,10 @@ export const content = {
       ],
     },
     fudul: {
-      title: "فاءُ فضول",
+      title: "Fa Curiosity",
       subtitle: "A curiosity that never stops building with code.",
       kicker: "Tools & Domains",
+      decorativeMark: "F",
       categories: [
         {
           id: "languages",
@@ -851,7 +884,7 @@ export const content = {
       ],
     },
     forsa: {
-      title: "فاءُ فرصة",
+      title: "Fa Opportunity",
       kicker: "Opportunity",
       heading: "Every great idea starts with an opportunity.",
       body: "If you have an idea looking for someone to build it, I'd love to hear about it.",
@@ -860,6 +893,30 @@ export const content = {
       linkedinLabel: "LinkedIn",
       linkedinUrl: "https://www.linkedin.com/in/fatimabdullah/",
       footerNote: "Fatima Abdullah",
+      form: {
+        nameLabel: "Full Name",
+        namePlaceholder: "Your full name",
+        emailLabel: "Email",
+        emailPlaceholder: "example@email.com",
+        subjectLabel: "Subject",
+        subjectPlaceholder: "Select a subject",
+        subjectOptions: [
+          { value: "new-project", label: "New Project" },
+          { value: "job-opportunity", label: "Job Opportunity" },
+          { value: "collaboration", label: "Collaboration" },
+          { value: "general-inquiry", label: "General Inquiry" },
+        ],
+        messageLabel: "Message",
+        messagePlaceholder: "Write your message here...",
+        submitLabel: "Send Message",
+        submittingLabel: "Sending...",
+        successTitle: "Message sent!",
+        successMessage: "Thanks for reaching out — I'll get back to you soon.",
+        sendAnotherLabel: "Send another message",
+        errorMessage: "Something went wrong. Please try again.",
+        requiredError: "This field is required.",
+        emailInvalidError: "Please enter a valid email address.",
+      },
     },
     footer: {
       copyright: "© 2026 Fatima Abdullah",

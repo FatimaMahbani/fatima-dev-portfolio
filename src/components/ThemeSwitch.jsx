@@ -1,11 +1,11 @@
-function ThemeSwitch({ theme, onToggle }) {
+function ThemeSwitch({ theme, onToggle, toDarkLabel, toLightLabel }) {
   const isDark = theme === "dark"
 
   return (
     <button
       type="button"
       className="theme-switch"
-      aria-label="تبديل الثيم"
+      aria-label={isDark ? toLightLabel : toDarkLabel}
       aria-pressed={isDark}
       onClick={onToggle}
     >

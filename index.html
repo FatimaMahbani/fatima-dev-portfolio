@@ -9,6 +9,20 @@
   </head>
   <body>
     <div id="root"></div>
+    <!--
+      Static Netlify Forms registration. Netlify's build bot only detects
+      forms present in the built HTML — the real form in Forsa.jsx is
+      rendered client-side by React, so it's invisible at build time.
+      This hidden twin exists purely so Netlify provisions the "contact"
+      form (same name + field names), which the React form then submits to.
+    -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="subject" />
+      <textarea name="message"></textarea>
+      <input type="text" name="bot-field" />
+    </form>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
